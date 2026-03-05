@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Create ZIP archive
+        run: |
+          zip -r electril-build-tower-mod-v${{ steps.get_version.outputs.VERSION }}.zip \
+            mod.json \
+            scripts/ \
+            README.md \
+            LICENSE
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Electril Build Tower Mod v${{ steps.get_version.outputs.VERSION }}
+          body: |
+            ## Electril Build Tower Mod v${{ steps.get_version.outputs.VERSION }}
+            
+            ### Features
+            - Build Tower range extended 5x (50 tiles → 250 tiles)
+            - Both visual and effect range modified
+            - Designed for Electril/Elecian faction
+            
+            ### Installation
+            1. Download the ZIP file
+            2. Extract to your Mindustry mods folder
+            3. Enable in Mods menu
+            
+            ### Files
+            - `electril-build-tower-mod-v${{ steps.get_version.outputs.VERSION }}.zip` - Full mod package
+          files: |
+            electril-build-tower-mod-v${{ steps.get_version.outputs.VERSION }}.zip
+            mod.json
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mod-package
+          path: electril-build-tower-mod-v${{ steps.get_version.outputs.VERSION }}.zip
