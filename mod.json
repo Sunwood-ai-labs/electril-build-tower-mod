@@ -1,0 +1,8 @@
+{
+  "displayName": "[#FFF861FF]Electril Build Tower Mod",
+  "name": "electril-build-tower",
+  "author": "Aslan",
+  "description": "Mod that increases Build Tower range by 5x for Electril faction (default ~120 tiles -> ~600 tiles)",
+  "minGameVersion": "154",
+  "version": "1.0.0"
+}
