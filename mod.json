@@ -2,7 +2,8 @@
   "displayName": "[#FFF861FF]Electril Build Tower Mod",
   "name": "electril-build-tower",
   "author": "Aslan",
-  "description": "Mod that increases Build Tower range by 5x for Electril faction (default ~120 tiles -> ~600 tiles)",
+  "description": "Increases Build Tower range by 5x for Electril/Elecian faction.\n\nFeatures:\n- Visual range: 50 tiles -> 250 tiles\n- Build support range: 50 tiles -> 250 tiles\n- Perfect for large-scale construction with Elecian faction\n\nNote: Build towers outside camera view may not update (game limitation)",
   "minGameVersion": "154",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "repo": "Sunwood-ai-labs/electril-build-tower-mod"
 }
