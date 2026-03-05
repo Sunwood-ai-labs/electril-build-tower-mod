@@ -7,6 +7,7 @@ Mindustryのビルドタワー（Build Tower）の範囲を5倍に拡大するMO
 - ビルドタワーの**視覚範囲**を5倍に拡大
 - ビルドタワーの**実際の建築支援効果範囲**を5倍に拡大
 - デフォルト: 200 ticks (~50 tiles) → 1000 ticks (~250 tiles)
+- **画面外でも建設支援を行う**（カメラ視界外のビルドタワーも更新）
 
 ## 必要条件
 
@@ -80,7 +81,7 @@ electril-build-tower-mod/
 
 ### main.js の説明
 
-このスクリプトは `ContentInitEvent` イベントでビルドタワーの設定を変更します。
+このスクリプトは `ContentInitEvent` イベントでビルドタワーの設定を変更し、`Trigger.update` で画面外更新を強制します。
 
 ```javascript
 Events.on(ContentInitEvent, () => {
@@ -90,6 +91,15 @@ Events.on(ContentInitEvent, () => {
     // 範囲を5倍に変更
     buildTower.range = originalRange * 5;                      // 視覚範囲
     buildTower.unitType.buildRange = originalBuildRange * 5;   // 実際の効果範囲（重要！）
+
+    // 画面外更新を有効化
+    buildTower.sync = true;
+});
+
+// 画面外でもビルドタワーを更新
+Events.on(Trigger.update, () => {
+    // 全チームのビルドタワーを強制更新
+    // カメラ視界外でも建設支援を行う
 });
 ```
 

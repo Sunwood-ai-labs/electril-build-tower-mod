@@ -79,6 +79,25 @@ buildTower.unitType.buildRange = originalBuildRange * 5;   // 実際の効果範
 - `range` のみ変更 → 視覚範囲は変わるが、実際の効果範囲は変わらない
 - `unitType.buildRange` も変更 → 実際の建築支援効果範囲も変わる
 
+### 画面外更新の問題と解決策
+
+Mindustryはパフォーマンス最適化のため、カメラ視界外のブロックの `updateTile()` をスキップまたは低頻度で実行します。これにより、画面外のビルドタワーが建設支援を行わない問題が発生します。
+
+**解決策:**
+
+1. **`sync = true` を設定** - ネットワーク同期のために強制的に更新頻度を上げる
+2. **`Trigger.update` イベントを使用** - 毎フレーム全ビルドタワーの更新を強制実行
+
+```javascript
+// syncモードを有効化
+buildTower.sync = true;
+
+// Trigger.updateで画面外更新を強制
+Events.on(Trigger.update, () => {
+    // 全チームのビルドタワーを更新
+});
+```
+
 ### mod.json の注意点
 
 - `"java": true` を**含めない**こと（Javaクラスを探そうとしてエラーになる）
